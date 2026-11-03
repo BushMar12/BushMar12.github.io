@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
 <title>The Anh Nguyen</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Engineering drawing set of The Anh Nguyen, machine learning and AI engineer in Sydney: computer vision, edge deployment, MLOps and reinforcement learning.">
@@ -12,7 +13,7 @@
 <style>
 /* Layout: an engineering drawing set. Sheet register on a sticky left rail (top bar below 1180px);
    each sheet is a 12-column grid with a 3-column margin for metadata and red-pen review notes.
-   Light = drafting film with non-photo-blue construction lines. Dark = blueprint. */
+   One look for every visitor: drafting film with non-photo-blue construction lines. */
 :root {
   --paper: #F1F3F1;
   --sheet: #F9FAF9;
@@ -39,20 +40,8 @@
   --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 72px; --s9: 112px;
   --side: clamp(16px, 4vw, 56px);
   --rail: 236px;
+  color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #0E1A26; --sheet: #12212F; --ink: #E6EDF2; --graphite: #9DB0BF; --rule: #2B4054;
-    --construct: #3A6B8A; --construct-fill: #1B3D56; --redline: #FF8571;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #0E1A26; --sheet: #12212F; --ink: #E6EDF2; --graphite: #9DB0BF; --rule: #2B4054;
-  --construct: #3A6B8A; --construct-fill: #1B3D56; --redline: #FF8571;
-  color-scheme: dark;
-}
-
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
