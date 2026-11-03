@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Anh Nguyen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Engineering drawing set of The Anh Nguyen, machine learning and AI engineer in Sydney: computer vision, edge deployment, MLOps and reinforcement learning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap">
+<style>
+/* Layout: an engineering drawing set. Sheet register on a sticky left rail (top bar below 1180px);
+   each sheet is a 12-column grid with a 3-column margin for metadata and red-pen review notes.
+   Light = drafting film with non-photo-blue construction lines. Dark = blueprint. */
+:root {
+  --paper: #F1F3F1;
+  --sheet: #F9FAF9;
+  --ink: #15181A;
+  --graphite: #4A5156;
+  --rule: #C2CACB;
+  --construct: #8FC6DA;
+  --construct-fill: #D5ECF4;
+  --redline: #B3261C;
+
+  --f-display: "Archivo", "Archivo Variable", "Helvetica Neue", Arial, sans-serif;
+  --f-text: "Source Serif 4", "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
+  --f-mono: "Martian Mono", "Martian Mono Variable", ui-monospace, Menlo, Consolas, monospace;
+
+  --fs-note: 0.6875rem;
+  --fs-small: 0.875rem;
+  --fs-body: 1.125rem;
+  --fs-lead: clamp(1.3rem, 1.05rem + 0.9vw, 1.65rem);
+  --fs-h3: 1.2rem;
+  --fs-h2: clamp(2.1rem, 1.3rem + 3vw, 3.6rem);
+  --fs-no: clamp(2.6rem, 1.6rem + 4vw, 5.5rem);
+  --fs-cover: clamp(3rem, 0.6rem + 8.6vw, 8.2rem);
+
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 72px; --s9: 112px;
+  --side: clamp(16px, 4vw, 56px);
+  --rail: 236px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E1A26; --sheet: #12212F; --ink: #E6EDF2; --graphite: #9DB0BF; --rule: #2B4054;
+    --construct: #3A6B8A; --construct-fill: #1B3D56; --redline: #FF8571;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0E1A26; --sheet: #12212F; --ink: #E6EDF2; --graphite: #9DB0BF; --rule: #2B4054;
+  --construct: #3A6B8A; --construct-fill: #1B3D56; --redline: #FF8571;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-text); font-size: var(--fs-body); line-height: 1.62;
+  font-optical-sizing: auto; overflow-x: hidden;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--paper); }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--redline); outline-offset: 3px; }
+h1, h2, h3, h4 { margin: 0; font-family: var(--f-display); font-weight: 700; line-height: 1.05; text-wrap: balance; }
+p, ul, ol, dl, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+.mono { font-family: var(--f-mono); }
+.lbl {
+  font-family: var(--f-mono); font-size: var(--fs-note); font-weight: 400; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--graphite); font-variation-settings: "wdth" 87.5; line-height: 1.5;
+}
+.num { font-variant-numeric: tabular-nums lining-nums; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Red-pen review notes: limits and items still to confirm */
+.check {
+  font-family: var(--f-text); font-style: italic; color: var(--redline); font-size: 0.92em;
+  border-bottom: 1px solid currentColor; padding-bottom: 1px;
+}
+.check::before { content: "check: "; font-family: var(--f-mono); font-style: normal; font-size: 0.72em; letter-spacing: 0.04em; text-transform: uppercase; }
+.redpen { color: var(--redline); border-left: 2px solid var(--redline); padding-left: var(--s3); display: grid; gap: var(--s1); }
+.redpen p { font-style: italic; font-size: var(--fs-small); line-height: 1.55; }
+.redpen .lbl { color: var(--redline); }
+
+/* Page frame */
+.page { display: grid; grid-template-columns: minmax(0, 1fr); max-width: 1480px; margin-inline: auto; }
+.rail { display: none; }
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--paper);
+  border-bottom: 1px solid var(--ink);
+  padding-left: max(var(--side), env(safe-area-inset-left, 0px)); padding-right: max(var(--side), env(safe-area-inset-right, 0px));
+}
+.topbar-row { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); padding-block: 10px; }
+.topbar .who { font-family: var(--f-display); font-weight: 700; font-variation-settings: "wdth" 112; font-size: 0.95rem; text-decoration: none; white-space: nowrap; }
+.reg-m summary {
+  list-style: none; cursor: pointer; font-family: var(--f-mono); font-size: var(--fs-note); text-transform: uppercase; letter-spacing: 0.04em;
+  border: 1px solid var(--ink); padding: 6px 10px; white-space: nowrap; font-variation-settings: "wdth" 87.5;
+}
+.reg-m summary::-webkit-details-marker { display: none; }
+.reg-m[open] summary { background: var(--ink); color: var(--paper); }
+.reg-m nav { position: absolute; left: 0; right: 0; top: 100%; background: var(--paper); border-bottom: 1px solid var(--ink);
+  padding: var(--s3) max(var(--side), env(safe-area-inset-right, 0px)) var(--s4) max(var(--side), env(safe-area-inset-left, 0px)); }
+.reg-list { display: grid; }
+.reg-list a {
+  display: grid; grid-template-columns: 2.6em minmax(0, 1fr); gap: var(--s2); align-items: baseline; padding: 7px 0;
+  text-decoration: none; border-top: 1px solid var(--rule); font-family: var(--f-display); font-size: 0.95rem;
+}
+.reg-list a .n { font-family: var(--f-mono); font-size: var(--fs-note); color: var(--graphite); }
+.reg-list a[aria-current="true"] { font-weight: 700; }
+.reg-list a[aria-current="true"] .n::before { content: "■ "; color: var(--redline); }
+
+@media (min-width: 1180px) {
+  .page { grid-template-columns: var(--rail) minmax(0, 1fr); }
+  .topbar { display: none; }
+  .rail {
+    display: flex; flex-direction: column; gap: var(--s6); position: sticky; top: env(safe-area-inset-top, 0px); height: 100vh;
+    padding: var(--s6) var(--s5) var(--s5) max(var(--s5), env(safe-area-inset-left, 0px)); border-right: 1px solid var(--ink);
+    overflow-y: auto;
+  }
+  .rail .who { font-family: var(--f-display); font-weight: 800; font-variation-settings: "wdth" 118; font-size: 1.15rem; line-height: 1.05; text-decoration: none; }
+  .rail .who span { display: block; font-family: var(--f-mono); font-weight: 400; font-size: var(--fs-note); color: var(--graphite); margin-top: var(--s2); text-transform: uppercase; letter-spacing: .04em; font-variation-settings: "wdth" 87.5; line-height: 1.6; }
+  .rail-foot { margin-top: auto; display: grid; gap: var(--s2); font-family: var(--f-mono); font-size: var(--fs-note); font-variation-settings: "wdth" 87.5; }
+  .rail-foot a { text-decoration: none; }
+  .rail-foot a:hover { text-decoration: underline; }
+}
+
+/* Sheets */
+.sheet {
+  padding-left: max(var(--side), env(safe-area-inset-left, 0px)); padding-right: max(var(--side), env(safe-area-inset-right, 0px));
+  padding-block: var(--s8) var(--s9); border-bottom: 1px solid var(--ink); scroll-margin-top: 56px;
+}
+@media (min-width: 1180px) { .sheet { scroll-margin-top: 0; } }
+.g12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--s5); row-gap: var(--s7); }
+.g12 > * { grid-column: 1 / -1; min-width: 0; align-self: start; }
+@media (min-width: 900px) {
+  .c-margin { grid-column: 1 / span 3; }
+  .c-main { grid-column: 4 / span 7; }
+  .c-wide { grid-column: 4 / -1; }
+  .c-full { grid-column: 1 / -1; }
+}
+
+.sheet-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s2) var(--s5); align-items: end; border-top: 3px solid var(--ink); padding-top: var(--s4); }
+.sheet-no { font-family: var(--f-display); font-weight: 300; font-variation-settings: "wdth" 125; font-size: var(--fs-no); line-height: .8; letter-spacing: -0.03em; }
+.sheet-head h2 { font-size: var(--fs-h2); font-variation-settings: "wdth" 108; letter-spacing: -0.02em; font-weight: 750; }
+.sheet-head .kicker { grid-column: 2; font-family: var(--f-text); font-style: italic; font-size: var(--fs-lead); line-height: 1.3; color: var(--graphite); max-width: 40ch; }
+@media (max-width: 640px) {
+  .sheet-head { grid-template-columns: minmax(0, 1fr); }
+  .sheet-head .kicker { grid-column: 1; }
+}
+
+.meta { display: grid; gap: var(--s4); align-content: start; }
+.meta div { display: grid; gap: 2px; border-top: 1px solid var(--rule); padding-top: var(--s2); }
+.meta dd { margin: 0; font-family: var(--f-display); font-size: 0.95rem; line-height: 1.4; }
+.meta dd a { font-weight: 600; }
+@media (min-width: 640px) and (max-width: 899px) { .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s5); } }
+
+.abstract { font-size: var(--fs-lead); line-height: 1.45; letter-spacing: -0.003em; }
+.prose { display: grid; gap: var(--s4); max-width: 66ch; align-content: start; }
+.prose h3, .h3 { font-family: var(--f-display); font-size: var(--fs-h3); font-weight: 700; font-variation-settings: "wdth" 100; margin-bottom: calc(-1 * var(--s1)); }
+
+/* Figures */
+.fig { display: grid; gap: var(--s3); }
+.fig-frame { border: 1px solid var(--ink); background: var(--sheet); overflow-x: auto; position: relative; }
+.fig-frame svg { display: block; width: 100%; height: auto; }
+.scroll-hint { display: none; }
+@media (max-width: 799px) { .fig-frame svg.schem { width: 820px; max-width: none; } .scroll-hint { display: inline; } }
+.fig figcaption { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s3); font-size: var(--fs-small); line-height: 1.5; color: var(--graphite); max-width: 92ch; }
+.fig figcaption .lbl { color: var(--ink); white-space: nowrap; padding-top: 3px; }
+
+.schem .gridline { fill: none; stroke: var(--construct); stroke-width: 0.5; opacity: 0.55; }
+.schem .band { fill: none; stroke: var(--graphite); stroke-width: 1; }
+.schem .band.dashed { stroke-dasharray: 5 4; }
+.schem .band-l { font-family: var(--f-mono); font-size: 10.5px; fill: var(--graphite); letter-spacing: .04em; }
+.schem .blk rect { fill: var(--sheet); stroke: var(--ink); stroke-width: 1.25; }
+.schem .blk.io rect { fill: none; stroke-dasharray: 2 3; }
+.schem .blk.plant rect { stroke-width: 2; }
+.schem .blk .t { font-family: var(--f-display); font-size: 13.5px; font-weight: 650; fill: var(--ink); }
+.schem .blk .s { font-family: var(--f-display); font-size: 11.5px; fill: var(--graphite); }
+.schem .bal circle { fill: var(--paper); stroke: var(--ink); stroke-width: 1; }
+.schem .bal text { font-family: var(--f-mono); font-size: 9.5px; fill: var(--ink); text-anchor: middle; }
+.schem .wire { fill: none; stroke: var(--ink); stroke-width: 1.2; }
+.schem .wire.em { stroke-dasharray: 6 3; }
+.schem .wire.fb { stroke-width: 2.2; }
+.schem .ah { fill: var(--ink); }
+.schem .wl { font-family: var(--f-mono); font-size: 10.5px; fill: var(--graphite); }
+.schem .blk { transition: none; }
+.schem .blk.hl rect { fill: var(--construct-fill); stroke-width: 2.4; }
+.schem .blk.hl .bal circle { fill: var(--ink); }
+.schem .blk.hl .bal text { fill: var(--paper); }
+@media (prefers-reduced-motion: no-preference) { .schem .blk rect, .decisions li { transition: fill .12s, background-color .12s; } }
+
+.chart .cg { stroke: var(--construct); stroke-width: 0.75; }
+.chart .chance { stroke: var(--graphite); stroke-dasharray: 3 3; stroke-width: 1; }
+.chart .cax { font-family: var(--f-mono); font-size: 10.5px; fill: var(--graphite); }
+.chart .cax.strong { fill: var(--ink); font-weight: 500; }
+.chart .cl { fill: none; stroke: var(--graphite); stroke-width: 1.4; }
+.chart .cl.s-go-c { stroke-dasharray: 2 3; }
+.chart .cl.s-stop { stroke-dasharray: 7 4; }
+.chart .cl.s-auc { stroke: var(--ink); stroke-width: 3; }
+.chart .cp { fill: var(--sheet); stroke: var(--graphite); stroke-width: 1.4; }
+.chart .cp.s-auc { stroke: var(--ink); stroke-width: 2.5; }
+.chart .cv { font-family: var(--f-mono); font-size: 11px; fill: var(--ink); font-weight: 500; }
+.chart .ce { font-family: var(--f-display); font-size: 12.5px; fill: var(--graphite); }
+.chart .ce.strong { fill: var(--ink); font-weight: 700; }
+
+/* Decision record */
+.decisions { display: grid; border-top: 1px solid var(--ink); counter-reset: none; }
+.decisions li {
+  display: grid; grid-template-columns: 4.2rem minmax(0, 1fr); gap: var(--s3); padding: var(--s4) var(--s2) var(--s4) 0;
+  border-bottom: 1px solid var(--rule); cursor: default; outline-offset: -2px;
+}
+.decisions li.hl { background: color-mix(in srgb, var(--construct-fill) 70%, transparent); }
+.decisions .dn { font-family: var(--f-mono); font-size: 0.8rem; font-weight: 500; padding-top: 4px; }
+.decisions .dn small { display: block; font-size: var(--fs-note); color: var(--graphite); font-weight: 400; margin-top: 2px; }
+.decisions .what { font-family: var(--f-display); font-weight: 600; font-size: 1rem; line-height: 1.4; }
+.decisions .why { font-size: 1rem; line-height: 1.55; color: var(--graphite); margin-top: var(--s1); }
+.decisions .why b { font-family: var(--f-mono); font-size: var(--fs-note); font-weight: 400; text-transform: uppercase; letter-spacing: .04em; color: var(--ink); margin-right: 6px; }
+
+/* Booktabs tables */
+.tbl { overflow-x: auto; }
+table.bt { border-collapse: collapse; width: 100%; font-family: var(--f-display); font-size: 0.95rem; }
+table.bt caption { caption-side: top; text-align: left; padding-bottom: var(--s3); }
+table.bt thead th { font-family: var(--f-mono); font-size: var(--fs-note); font-weight: 400; text-transform: uppercase; letter-spacing: .04em; color: var(--graphite); text-align: left; padding: var(--s2) var(--s3) var(--s2) 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); vertical-align: bottom; }
+table.bt td, table.bt tbody th { padding: 9px var(--s3) 9px 0; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); font-weight: 400; }
+table.bt tbody tr:last-child td, table.bt tbody tr:last-child th { border-bottom: 2px solid var(--ink); }
+table.bt td.r, table.bt th.r { text-align: right; }
+table.bt .num { font-variant-numeric: tabular-nums; }
+table.bt.bench { min-width: 560px; }
+table.bt tbody th { font-weight: 600; }
+table.bt tr.sel td, table.bt tr.sel th { font-weight: 700; }
+table.bt td .lbl { display: block; text-transform: none; letter-spacing: 0; font-size: 0.72rem; }
+
+.lesson { border-top: 1px solid var(--ink); padding-top: var(--s4); display: grid; gap: var(--s2); }
+.lesson p:not(.lbl) { font-size: var(--fs-lead); line-height: 1.4; font-style: italic; max-width: 52ch; }
+.stack { font-family: var(--f-mono); font-size: 0.72rem; line-height: 1.75; color: var(--ink); font-variation-settings: "wdth" 87.5; }
+
+/* Cover */
+.cover { padding-block: var(--s6) var(--s8); }
+.cover-frame { position: relative; border: 2px solid var(--ink); padding: clamp(20px, 4vw, 56px); display: grid; gap: clamp(40px, 6vw, 72px); background: var(--paper); }
+.cover-frame::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: linear-gradient(var(--construct) 0.5px, transparent 0.5px), linear-gradient(90deg, var(--construct) 0.5px, transparent 0.5px);
+  background-size: 24px 24px; background-position: -1px -1px;
+}
+.cover-frame > * { position: relative; }
+.cover-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s2) var(--s5); }
+.cover-id { display: grid; gap: var(--s5); }
+.cover-name { font-size: var(--fs-cover); font-weight: 800; font-variation-settings: "wdth" 116; letter-spacing: -0.035em; line-height: 0.86; }
+.cover-name span { display: block; }
+.cover-name span + span { padding-left: 0.62em; }
+.cover-role { font-family: var(--f-display); font-variation-settings: "wdth" 112; font-weight: 600; font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem); text-transform: uppercase; letter-spacing: .02em; margin-top: var(--s3); }
+.cover-thesis { font-size: clamp(1.4rem, 1.05rem + 1.3vw, 2.1rem); line-height: 1.25; max-width: 30ch; letter-spacing: -0.01em; }
+.cover-thesis em { font-style: italic; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
+.facts div { display: grid; gap: 4px; padding: 12px 16px 14px 0; }
+.facts div + div { border-left: 1px solid var(--rule); padding-left: 16px; }
+.facts dd { margin: 0; font-family: var(--f-display); font-size: 1.05rem; font-weight: 600; }
+@media (max-width: 560px) {
+  .facts { grid-template-columns: minmax(0, 1fr); }
+  .facts div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); }
+}
+.cover-links { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s5); align-items: center; font-family: var(--f-display); font-weight: 600; }
+.btn-sq { display: inline-flex; gap: 10px; align-items: center; border: 1.5px solid var(--ink); padding: 10px 16px; text-decoration: none; background: var(--ink); color: var(--paper); }
+.btn-sq:hover { background: var(--paper); color: var(--ink); }
+.cover-links a:not(.btn-sq) { text-decoration: underline; }
+.cover-links .arr { font-family: var(--f-mono); font-weight: 400; font-size: .85em; }
+
+/* Further work register */
+.register-list { display: grid; border-top: 2px solid var(--ink); }
+.reg-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s3); padding-block: var(--s5); border-bottom: 1px solid var(--ink); }
+@media (min-width: 900px) { .reg-row { grid-template-columns: 7rem minmax(0, 6fr) minmax(0, 3fr); column-gap: var(--s5); } }
+.reg-no { font-family: var(--f-display); font-weight: 300; font-variation-settings: "wdth" 125; font-size: 2.4rem; line-height: .9; }
+.reg-row h3 { font-size: 1.45rem; font-variation-settings: "wdth" 104; margin-bottom: var(--s2); }
+.reg-row .body p + p { margin-top: var(--s2); }
+.reg-row .body p { font-size: 1.02rem; line-height: 1.6; }
+.reg-row dl { display: grid; gap: var(--s2); align-content: start; }
+.reg-row dl div { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: var(--s2); align-items: baseline; }
+.reg-row dd { margin: 0; font-family: var(--f-display); font-size: 0.9rem; }
+
+/* Evidence matrix */
+.matrix-wrap { overflow-x: auto; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+table.matrix { border-collapse: collapse; width: 100%; min-width: 760px; font-family: var(--f-display); font-size: 0.92rem; }
+table.matrix th, table.matrix td { padding: 8px 10px; border-bottom: 1px solid var(--rule); text-align: center; vertical-align: middle; }
+table.matrix thead th { font-family: var(--f-mono); font-weight: 400; font-size: var(--fs-note); text-transform: uppercase; letter-spacing: .03em; color: var(--graphite); border-bottom: 1px solid var(--ink); vertical-align: bottom; line-height: 1.35; font-variation-settings: "wdth" 87.5; }
+table.matrix tbody th { text-align: left; font-weight: 600; position: sticky; left: 0; background: var(--paper); min-width: 15rem; }
+table.matrix tbody th span { display: block; font-weight: 400; color: var(--graphite); font-size: 0.8rem; }
+table.matrix tbody tr:last-child th, table.matrix tbody tr:last-child td { border-bottom: 0; }
+table.matrix tr.grp th { font-family: var(--f-mono); font-size: var(--fs-note); text-transform: uppercase; letter-spacing: .04em; color: var(--graphite); font-weight: 400; padding-top: 16px; background: var(--paper); }
+.dot { display: inline-block; width: 10px; height: 10px; background: var(--ink); }
+.dot.half { background: transparent; border: 1.5px solid var(--ink); }
+
+/* About */
+.rules-list { display: grid; gap: var(--s4); }
+.rules-list li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: var(--s2); }
+.rules-list .n { font-family: var(--f-mono); font-size: var(--fs-note); padding-top: 5px; color: var(--graphite); }
+.rules-list b { font-family: var(--f-display); font-weight: 700; display: block; font-size: 1rem; }
+.rules-list p { font-size: 0.98rem; line-height: 1.5; color: var(--graphite); }
+
+/* Record */
+.record { display: grid; gap: var(--s7); }
+@media (min-width: 900px) { .record { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s7); } }
+.rec-entry { display: grid; gap: var(--s2); padding-block: var(--s4); border-top: 1px solid var(--ink); }
+.rec-entry h3 { font-size: 1.3rem; font-variation-settings: "wdth" 104; }
+.rec-entry .org { font-family: var(--f-display); color: var(--graphite); }
+.rec-entry ul { display: grid; gap: var(--s2); margin-top: var(--s2); }
+.rec-entry li { font-size: 1rem; line-height: 1.55; padding-left: 1.1em; position: relative; }
+.rec-entry li::before { content: "–"; position: absolute; left: 0; color: var(--graphite); }
+.rec-entry p { font-size: 1rem; line-height: 1.55; }
+.rec-entry p.lbl { font-size: var(--fs-note); line-height: 1.5; }
+.gpa { font-family: var(--f-display); font-size: 1rem; }
+.gpa b { font-size: 1.6rem; font-weight: 800; font-variation-settings: "wdth" 112; }
+
+/* Contact */
+.contact-mail { font-family: var(--f-display); font-weight: 800; font-variation-settings: "wdth" 110; font-size: clamp(1.25rem, 0.5rem + 3.1vw, 2.85rem); letter-spacing: -0.02em; line-height: 1.05; overflow-wrap: anywhere; user-select: all; }
+.contact-rows { display: grid; border-top: 2px solid var(--ink); }
+.crow { display: grid; grid-template-columns: 7rem minmax(0, 1fr) auto; gap: var(--s3); align-items: center; padding-block: var(--s4); border-bottom: 1px solid var(--ink); }
+.crow .v { font-family: var(--f-display); font-weight: 600; font-size: clamp(1rem, 0.9rem + 0.6vw, 1.35rem); overflow-wrap: anywhere; }
+.crow a.v { text-decoration: none; }
+.crow a.v:hover { text-decoration: underline; }
+.copy { font-family: var(--f-mono); font-size: var(--fs-note); text-transform: uppercase; letter-spacing: .04em; background: var(--paper); color: var(--ink); border: 1.5px solid var(--ink); padding: 8px 12px; cursor: pointer; }
+.copy:hover { background: var(--ink); color: var(--paper); }
+@media (max-width: 560px) { .crow { grid-template-columns: minmax(0, 1fr) auto; } .crow .lbl { grid-column: 1 / -1; } }
+
+.foot { padding: var(--s5) max(var(--side), env(safe-area-inset-right, 0px)) var(--s7) max(var(--side), env(safe-area-inset-left, 0px)); display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); justify-content: space-between; }
+</style>
+<style>img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div class="page">
+  <aside class="rail" aria-label="Sheet register">
+    <a class="who" href="#s00">The Anh<br>Nguyen<span>ML · AI · Data engineer<br>Sydney, NSW</span></a>
+    <nav aria-label="Sheets">
+      <p class="lbl" style="margin-bottom:8px">Sheet register</p>
+      <div class="reg-list" data-reg><a href="#s00"><span class="n">00</span><span>Cover</span></a><a href="#s01"><span class="n">01</span><span>VoiceEye</span></a><a href="#s02"><span class="n">02</span><span>JetRacer RL</span></a><a href="#s03"><span class="n">03</span><span>Damage Assessment</span></a><a href="#s04"><span class="n">04</span><span>Further work</span></a><a href="#s05"><span class="n">05</span><span>The engineer</span></a><a href="#s06"><span class="n">06</span><span>Record</span></a><a href="#s07"><span class="n">07</span><span>Correspondence</span></a></div>
+    </nav>
+    <div class="rail-foot">
+      <a href="#s07">mr.bushpro2002@gmail.com</a>
+      <a href="https://github.com/BushMar12" target="_blank" rel="noopener">github.com/BushMar12 ↗</a>
+      <a href="https://www.linkedin.com/in/bush2002/" target="_blank" rel="noopener">linkedin.com/in/bush2002 ↗</a>
+    </div>
+  </aside>
+
+  <header class="topbar">
+    <div class="topbar-row">
+      <a class="who" href="#s00">T. A. Nguyen</a>
+      <details class="reg-m" id="reg-m">
+        <summary><span id="reg-cur">Sheet 00 / 07</span> · Register</summary>
+        <nav aria-label="Sheets (mobile)"><div class="reg-list" data-reg><a href="#s00"><span class="n">00</span><span>Cover</span></a><a href="#s01"><span class="n">01</span><span>VoiceEye</span></a><a href="#s02"><span class="n">02</span><span>JetRacer RL</span></a><a href="#s03"><span class="n">03</span><span>Damage Assessment</span></a><a href="#s04"><span class="n">04</span><span>Further work</span></a><a href="#s05"><span class="n">05</span><span>The engineer</span></a><a href="#s06"><span class="n">06</span><span>Record</span></a><a href="#s07"><span class="n">07</span><span>Correspondence</span></a></div></nav>
+      </details>
+    </div>
+  </header>
+
+  <main>
+    <!-- 00 COVER -->
+    <section class="sheet cover" id="s00" aria-label="Cover sheet">
+      <div class="cover-frame">
+        <div class="cover-top">
+          <p class="lbl">Engineering portfolio</p>
+          <p class="lbl">Sheet 00 of 07</p>
+        </div>
+        <div class="cover-id">
+          <h1 class="cover-name"><span>The Anh</span><span>Nguyen</span></h1>
+          <p class="cover-role">Machine learning, AI and data engineer</p>
+          <p class="cover-thesis">I build machine learning systems and <em>measure them on the hardware they run on.</em></p>
+        </div>
+        <dl class="facts">
+          <div><dt class="lbl">Based</dt><dd>Sydney, NSW</dd></div>
+          <div><dt class="lbl">Education</dt><dd>Master of AI, UTS</dd></div>
+          <div><dt class="lbl">Available</dt><dd>Now</dd></div>
+        </dl>
+        <div class="cover-links">
+          <a class="btn-sq" href="#s01">See the work <span class="arr">↓</span></a>
+          <a href="#s06">Résumé</a>
+          <a href="The_Anh_Nguyen_Resume.pdf" target="_blank" rel="noopener">CV (PDF) <span class="arr">↓</span></a>
+          <a href="https://github.com/BushMar12" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a>
+          <a href="https://www.linkedin.com/in/bush2002/" target="_blank" rel="noopener">LinkedIn <span class="arr">↗</span></a>
+          <a href="#s07">Contact</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 VOICEEYE -->
+    <section class="sheet" id="s01" aria-labelledby="h01">
+      <div class="g12">
+        <header class="sheet-head c-full">
+          <p class="sheet-no num" aria-hidden="true">01</p>
+          <h2 id="h01">VoiceEye</h2>
+          <p class="kicker">On-device vision assistant for people with low vision</p>
+        </header>
+
+        <dl class="meta c-margin">
+          <div><dt class="lbl">Status</dt><dd>Deployed PWA, live on Cloudflare Pages</dd></div>
+          <div><dt class="lbl">Role</dt><dd>Sole developer: data, model, MLOps, app</dd></div>
+          <div><dt class="lbl">Period</dt><dd>April to May 2026</dd></div>
+          <div><dt class="lbl">Evidence</dt><dd>Public repository, 144 unit tests</dd></div>
+          <div><dt class="lbl">Source</dt><dd><a href="https://github.com/BushMar12/VoiceEye" target="_blank" rel="noopener">github.com/BushMar12/VoiceEye ↗</a><br><a href="https://voiceeye.pages.dev" target="_blank" rel="noopener">voiceeye.pages.dev ↗</a></dd></div>
+          <div><dt class="lbl">Stack</dt><dd class="stack">PyTorch, Ultralytics YOLO26, Optuna, ClearML, ONNX Runtime Web, TypeScript, React, Vitest, GitHub Actions, Cloudflare Workers AI</dd></div>
+        </dl>
+
+        <div class="c-main prose">
+          <p class="abstract">VoiceEye reads a phone's camera feed and tells a low-vision pedestrian what matters nearby: a car pulling in, a person close ahead. Detection runs inside the mobile browser, so camera frames never leave the device.</p>
+          <h3>Problem</h3>
+          <p>The detector had to fit a phone browser's memory and battery budget. The harder part was speech. A crowded street produces dozens of detections per second, and reading all of them aloud is useless. The app had to choose what to say and when.</p>
+        </div>
+
+        <figure class="fig c-full" data-fig="f1">
+          <div class="fig-frame"><svg class="schem" viewBox="0 0 1000 560" role="img" aria-labelledby="f1-t f1-d"><title id="f1-t">Figure 01.1: VoiceEye system schematic</title><desc id="f1-d">Off-device: dataset build (A), ClearML pipeline (B) and release (C) ship best.onnx to the phone. On device, the camera feeds pre-processing (1), YOLO26n in ONNX Runtime Web (2), the tracker (3), distance and proximity zones (4), the attention budget (5) and speech and haptics (6). Voice commands (7) call a vision-language model in the cloud (8), whose answer is spoken by block 6.</desc><defs><marker id="ah-f1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 L10 5 L0 10 z"/></marker><pattern id="grid-f1" width="20" height="20" patternUnits="userSpaceOnUse"><path class="gridline" d="M20 0 L0 0 0 20"/></pattern></defs><rect width="1000" height="560" fill="url(#grid-f1)"/><rect class="band dashed" x="20" y="20" width="960" height="130"/><text class="band-l" x="32" y="37">OFF-DEVICE · TRAINING AND RELEASE</text><g class="blk" data-id="A"><rect x="40" y="56" width="250" height="72"/><text class="t" x="54" y="79">Dataset build</text><text class="s" x="54" y="97">COCO · Open Images · Mapillary</text><text class="s" x="54" y="113">48 classes, 35 GB by reference</text><g class="bal"><circle cx="40" cy="56" r="10.5"/><text x="40" y="59.6">A</text></g></g><g class="blk" data-id="B"><rect x="330" y="56" width="270" height="72"/><text class="t" x="344" y="79">ClearML pipeline</text><text class="s" x="344" y="97">prep → Optuna HPO → train</text><text class="s" x="344" y="113">gate mAP@50 ≥ 0.40 → export</text><g class="bal"><circle cx="330" cy="56" r="10.5"/><text x="330" y="59.6">B</text></g></g><g class="blk" data-id="C"><rect x="640" y="56" width="240" height="72"/><text class="t" x="654" y="79">Release</text><text class="s" x="654" y="97">GitHub Actions opens a PR</text><text class="s" x="654" y="113">Cloudflare Pages deploy</text><g class="bal"><circle cx="640" cy="56" r="10.5"/><text x="640" y="59.6">C</text></g></g><path class="wire" d="M290 92 L330 92" marker-end="url(#ah-f1)"/><path class="wire" d="M600 92 L640 92" marker-end="url(#ah-f1)"/><rect class="band" x="20" y="190" width="740" height="340"/><text class="band-l" x="32" y="207">ON DEVICE · MOBILE BROWSER, WASM</text><rect class="band dashed" x="790" y="190" width="190" height="340"/><text class="band-l" x="802" y="207">CLOUD · ON DEMAND</text><g class="blk io" data-id="cam"><rect x="40" y="228" width="100" height="64"/><text class="t" x="54" y="251">Camera</text><text class="s" x="54" y="269">rear, live</text></g><g class="blk" data-id="1"><rect x="170" y="228" width="160" height="64"/><text class="t" x="184" y="251">Pre-process</text><text class="s" x="184" y="269">640², reused buffers</text><g class="bal"><circle cx="170" cy="228" r="10.5"/><text x="170" y="231.6">1</text></g></g><g class="blk" data-id="2"><rect x="360" y="228" width="160" height="64"/><text class="t" x="374" y="251">YOLO26n</text><text class="s" x="374" y="269">ONNX Runtime Web</text><g class="bal"><circle cx="360" cy="228" r="10.5"/><text x="360" y="231.6">2</text></g></g><g class="blk" data-id="3"><rect x="550" y="228" width="180" height="64"/><text class="t" x="564" y="251">Tracker</text><text class="s" x="564" y="269">IoU match, EMA velocity</text><g class="bal"><circle cx="550" cy="228" r="10.5"/><text x="550" y="231.6">3</text></g></g><g class="blk" data-id="4"><rect x="550" y="340" width="180" height="64"/><text class="t" x="564" y="363">Distance, zones</text><text class="s" x="564" y="381">pinhole model, box area</text><g class="bal"><circle cx="550" cy="340" r="10.5"/><text x="550" y="343.6">4</text></g></g><g class="blk" data-id="5"><rect x="360" y="340" width="160" height="64"/><text class="t" x="374" y="363">Attention budget</text><text class="s" x="374" y="381">1, 3 or 6 per 2 s</text><g class="bal"><circle cx="360" cy="340" r="10.5"/><text x="360" y="343.6">5</text></g></g><g class="blk" data-id="6"><rect x="170" y="340" width="160" height="64"/><text class="t" x="184" y="363">Speech, haptics</text><text class="s" x="184" y="381">TTS and vibration</text><g class="bal"><circle cx="170" cy="340" r="10.5"/><text x="170" y="343.6">6</text></g></g><g class="blk io" data-id="usr"><rect x="40" y="340" width="100" height="64"/><text class="t" x="54" y="363">Walker</text><text class="s" x="54" y="381">audio cues</text></g><g class="blk" data-id="7"><rect x="550" y="444" width="180" height="64"/><text class="t" x="564" y="467">Voice command</text><text class="s" x="564" y="485">describe · read · find</text><g class="bal"><circle cx="550" cy="444" r="10.5"/><text x="550" y="447.6">7</text></g></g><g class="blk" data-id="8"><rect x="805" y="444" width="160" height="80"/><text class="t" x="819" y="467">VLM</text><text class="s" x="819" y="485">Qwen3-VL (dev)</text><text class="s" x="819" y="501">Workers AI (prod)</text><g class="bal"><circle cx="805" cy="444" r="10.5"/><text x="805" y="447.6">8</text></g></g><path class="wire" d="M140 260 L170 260" marker-end="url(#ah-f1)"/><path class="wire" d="M330 260 L360 260" marker-end="url(#ah-f1)"/><path class="wire" d="M520 260 L550 260" marker-end="url(#ah-f1)"/><path class="wire" d="M640 292 L640 340" marker-end="url(#ah-f1)"/><path class="wire" d="M550 372 L520 372" marker-end="url(#ah-f1)"/><path class="wire" d="M360 372 L330 372" marker-end="url(#ah-f1)"/><path class="wire" d="M170 372 L140 372" marker-end="url(#ah-f1)"/><path class="wire" d="M730 476 L805 476" marker-end="url(#ah-f1)"/><path class="wire" d="M885 524 L885 546 L250 546 L250 404" marker-end="url(#ah-f1)"/><text class="wl" x="560" y="541" text-anchor="start">spoken answer</text><path class="wire em" d="M760 128 L760 168 L440 168 L440 228" marker-end="url(#ah-f1)"/><text class="wl" x="452" y="163" text-anchor="start">best.onnx, via pull request</text><text class="wl" x="630" y="320" text-anchor="end">~10 FPS, throttled</text></svg></div>
+          <figcaption><span class="lbl">Fig. 01.1</span><span>System schematic. Balloons A to C and 1 to 8 match the decision record below. Hover or focus a decision to see its blocks. Drawn from the repository's architecture. <span class="scroll-hint">Scroll the figure sideways.</span></span></figcaption>
+        </figure>
+
+        <div class="c-margin">
+          <div class="redpen"><p class="lbl">Review note</p><p>The 10 FPS figure is the app's throttle target for battery life. Detection runs every 100 ms by design.</p></div>
+        </div>
+        <div class="c-main">
+          <p class="h3" style="margin-bottom:12px">Decision record</p>
+          <ol class="decisions" data-for="f1">
+            <li tabindex="0" data-b="A"><span class="dn">D1<small>A</small></span><div><p class="what">Merged COCO 2017, Open Images v7 and Mapillary Vistas into one 48-class set, adding six safety-critical classes COCO lacks.</p><p class="why"><b>Why</b>No single public dataset covered street hazards for blind navigation. Automated validation and stratified splits keep each rebuild reproducible, and ClearML registers the 35 GB of images by reference, so nothing is re-uploaded.</p></div></li>
+            <li tabindex="0" data-b="B 2"><span class="dn">D2<small>B · 2</small></span><div><p class="what">Chose YOLO26n and tuned the model with Optuna Bayesian search inside a ClearML pipeline.</p><p class="why"><b>Why</b>The nano model fits the phone budget. HPO trials run on a separate GPU queue so the pipeline controller never blocks the only GPU worker.</p></div></li>
+            <li tabindex="0" data-b="1 2"><span class="dn">D3<small>1 · 2</small></span><div><p class="what">Ran inference in the browser with ONNX Runtime Web and fixed Safari memory crashes with reused buffers and explicit tensor disposal.</p><p class="why"><b>Why</b>On-device inference keeps camera frames private and removes network latency. The runtime bundle dropped from 24 MB to about 12 MB.</p></div></li>
+            <li tabindex="0" data-b="3 4"><span class="dn">D4<small>3 · 4</small></span><div><p class="what">Tracked objects across frames with IoU matching and EMA-smoothed velocity, then estimated distance with a pinhole camera model.</p><p class="why"><b>Why</b>Track IDs stop the app repeating itself, and a growing box marks an object moving toward the user. Box area sets the zone: safe below 25% of the frame, danger above 50%.</p></div></li>
+            <li tabindex="0" data-b="5 6"><span class="dn">D5<small>5 · 6</small></span><div><p class="what">Capped speech at 1, 3 or 6 announcements per 2-second window, with a hazard override for vehicles jumping into the danger zone.</p><p class="why"><b>Why</b>Users need the bus pulling in, not every chair. Same-class objects close together are grouped into one phrase, such as "3 people, ~4m".</p></div></li>
+            <li tabindex="0" data-b="7 8"><span class="dn">D6<small>7 · 8</small></span><div><p class="what">Added a slower, on-demand lane: a vision-language model for "describe", "read" and "find" voice commands.</p><p class="why"><b>Why</b>Detection names objects but cannot read a sign. Qwen3-VL runs through Ollama in development, and Cloudflare Workers AI serves production without a server to maintain.</p></div></li>
+            <li tabindex="0" data-b="B C"><span class="dn">D7<small>B · C</small></span><div><p class="what">Gated every release on mAP@50 ≥ 0.40, then let GitHub Actions pull the ONNX file and open a pull request.</p><p class="why"><b>Why</b>A model reaches users only through a reviewed pull request, never through a manual file copy.</p></div></li>
+          </ol>
+        </div>
+
+        <div class="c-main">
+          <div class="tbl">
+            <table class="bt">
+              <caption class="lbl">Table 01.1 · Results</caption>
+              <thead><tr><th scope="col">Measure</th><th scope="col" class="r">Value</th><th scope="col">Condition</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">mAP@50</th><td class="r num">0.50</td><td>48-class validation set, YOLO26n</td></tr>
+                <tr><th scope="row">mAP@50–95</th><td class="r num">0.35</td><td>Same set</td></tr>
+                <tr><th scope="row">Detection rate</th><td class="r num">~10 FPS</td><td>Mobile browser, on-device</td></tr>
+                <tr><th scope="row">Runtime bundle</th><td class="r num">24 → 12 MB</td><td>ONNX Runtime Web, WASM build</td></tr>
+                <tr><th scope="row">Unit tests</th><td class="r num">144</td><td>Tracking, attention, distance, voice</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="c-main lesson">
+          <p class="lbl">Lesson</p>
+          <p>Phone memory was the first blocker, ahead of accuracy. A good detector still overwhelms the user without rules for what to say.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 JETRACER -->
+    <section class="sheet" id="s02" aria-labelledby="h02">
+      <div class="g12">
+        <header class="sheet-head c-full">
+          <p class="sheet-no num" aria-hidden="true">02</p>
+          <h2 id="h02">JetRacer RL</h2>
+          <p class="kicker">A camera-only robot car, trained in simulation and driven on a real track</p>
+        </header>
+
+        <dl class="meta c-margin">
+          <div><dt class="lbl">Status</dt><dd>Lab-tested on the real car, 20 Oct 2026</dd></div>
+          <div><dt class="lbl">Role</dt><dd>Main code contributor in a UTS team. Owned the obstacle stop, simulator pipeline and car runtime.</dd></div>
+          <div><dt class="lbl">Credit</dt><dd>Steering policy and line-repaint method: team</dd></div>
+          <div><dt class="lbl">Evidence</dt><dd>Lab log, held-out evaluation, offline replay</dd></div>
+          <div><dt class="lbl">Source</dt><dd>Private team repository. Code walkthrough on request.</dd></div>
+          <div><dt class="lbl">Stack</dt><dd class="stack">PyTorch, Stable-Baselines3 (PPO, SAC, DQN), gym-donkeycar, Isaac Sim, ONNX Runtime, Jetson Nano, AWS SageMaker Studio, uv, pytest</dd></div>
+        </dl>
+
+        <div class="c-main prose">
+          <p class="abstract">The car sees the track through one fisheye camera and runs on a Jetson Nano. Policies train in the Donkey Car simulator. My part made the car stop for an object in its lane and drive on once someone removed the object.</p>
+          <h3>Problem</h3>
+          <p>Policies trained to drive well in simulation broke on the real car. The real camera had a 160° fisheye lens, pink edge shading and paler track lines. The real steering turned at about 75% of the simulated car's. The first obstacle-stop policy passed every simulator test and then stopped on every real straight.</p>
+        </div>
+
+        <figure class="fig c-full" data-fig="f2">
+          <div class="fig-frame"><svg class="schem" viewBox="0 0 1000 560" role="img" aria-labelledby="f2-t f2-d"><title id="f2-t">Figure 02.1: JetRacer development loop and control loop</title><desc id="f2-d">Top: the development loop. Simulator (S1), Isaac Sim obstacle clips (S2) and real far-band backgrounds (S3) feed training (T); checkpoints are selected on held-out real frames (S4) and exported as one ONNX bundle (E). Bottom: the 20 Hz control loop on the car: camera (1), pre-processing (2), policy (3), safety gate (4), motors (5), and the car on the track (plant) feeding back to the camera. Drive logs return to the replay tool (R).</desc><defs><marker id="ah-f2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 L10 5 L0 10 z"/></marker><pattern id="grid-f2" width="20" height="20" patternUnits="userSpaceOnUse"><path class="gridline" d="M20 0 L0 0 0 20"/></pattern></defs><rect width="1000" height="560" fill="url(#grid-f2)"/><rect class="band dashed" x="20" y="20" width="960" height="222"/><text class="band-l" x="32" y="37">DEVELOPMENT LOOP · PC AND AWS SAGEMAKER</text><g class="blk" data-id="S1"><rect x="40" y="52" width="200" height="52"/><text class="t" x="54" y="75">Donkey Car simulator</text><text class="s" x="54" y="93">lens, colour, randomisation</text><g class="bal"><circle cx="40" cy="52" r="10.5"/><text x="40" y="55.6">S1</text></g></g><g class="blk" data-id="S2"><rect x="40" y="114" width="200" height="52"/><text class="t" x="54" y="137">Isaac Sim clips</text><text class="s" x="54" y="155">1.6 m → contact, 1 cm steps</text><g class="bal"><circle cx="40" cy="114" r="10.5"/><text x="40" y="117.6">S2</text></g></g><g class="blk" data-id="S3"><rect x="40" y="176" width="200" height="52"/><text class="t" x="54" y="199">Real far bands</text><text class="s" x="54" y="217">lab-log backgrounds</text><g class="bal"><circle cx="40" cy="176" r="10.5"/><text x="40" y="179.6">S3</text></g></g><g class="blk" data-id="T"><rect x="290" y="104" width="180" height="72"/><text class="t" x="304" y="127">Train</text><text class="s" x="304" y="145">PPO steering (team)</text><text class="s" x="304" y="161">DQN STOP/GO</text><g class="bal"><circle cx="290" cy="104" r="10.5"/><text x="290" y="107.6">T</text></g></g><g class="blk" data-id="S4"><rect x="520" y="104" width="190" height="72"/><text class="t" x="534" y="127">Select checkpoint</text><text class="s" x="534" y="145">held-out real frames</text><text class="s" x="534" y="161">AUROC, GO and STOP rates</text><g class="bal"><circle cx="520" cy="104" r="10.5"/><text x="520" y="107.6">S4</text></g></g><g class="blk" data-id="E"><rect x="760" y="52" width="200" height="56"/><text class="t" x="774" y="75">Export bundle</text><text class="s" x="774" y="93">one ONNX: steering + go</text><g class="bal"><circle cx="760" cy="52" r="10.5"/><text x="760" y="55.6">E</text></g></g><g class="blk" data-id="R"><rect x="760" y="168" width="200" height="56"/><text class="t" x="774" y="191">Replay car logs</text><text class="s" x="774" y="209">matches car on every frame</text><g class="bal"><circle cx="760" cy="168" r="10.5"/><text x="760" y="171.6">R</text></g></g><path class="wire" d="M240 78 L262 78"/><path class="wire" d="M240 140 L262 140"/><path class="wire" d="M240 202 L262 202"/><path class="wire" d="M262 78 L262 202"/><path class="wire" d="M262 140 L290 140" marker-end="url(#ah-f2)"/><path class="wire" d="M470 140 L520 140" marker-end="url(#ah-f2)"/><path class="wire" d="M710 140 L735 140 L735 80 L760 80" marker-end="url(#ah-f2)"/><path class="wire" d="M760 196 L615 196 L615 176" marker-end="url(#ah-f2)"/><rect class="band" x="20" y="282" width="960" height="258"/><text class="band-l" x="32" y="299">CONTROL LOOP · ON THE CAR · 20 Hz</text><g class="blk" data-id="1"><rect x="40" y="322" width="140" height="72"/><text class="t" x="54" y="345">CSI camera</text><text class="s" x="54" y="363">160° fisheye</text><g class="bal"><circle cx="40" cy="322" r="10.5"/><text x="40" y="325.6">1</text></g></g><g class="blk" data-id="2"><rect x="205" y="322" width="190" height="72"/><text class="t" x="219" y="345">Pre-process</text><text class="s" x="219" y="363">colour norm, crop</text><text class="s" x="219" y="379">line repaint (team)</text><g class="bal"><circle cx="205" cy="322" r="10.5"/><text x="205" y="325.6">2</text></g></g><g class="blk" data-id="3"><rect x="420" y="322" width="170" height="72"/><text class="t" x="434" y="345">Policy (ONNX)</text><text class="s" x="434" y="363">steering + STOP/GO</text><text class="s" x="434" y="379">6.9 ms median</text><g class="bal"><circle cx="420" cy="322" r="10.5"/><text x="420" y="325.6">3</text></g></g><g class="blk" data-id="4"><rect x="615" y="322" width="175" height="72"/><text class="t" x="629" y="345">Safety gate</text><text class="s" x="629" y="363">150 ms tick limit</text><text class="s" x="629" y="379">stall and error stop</text><g class="bal"><circle cx="615" cy="322" r="10.5"/><text x="615" y="325.6">4</text></g></g><g class="blk" data-id="5"><rect x="815" y="322" width="155" height="72"/><text class="t" x="829" y="345">Motors, servo</text><text class="s" x="829" y="363">throttle, steering</text><g class="bal"><circle cx="815" cy="322" r="10.5"/><text x="815" y="325.6">5</text></g></g><g class="blk plant" data-id="P"><rect x="400" y="452" width="220" height="52"/><text class="t" x="414" y="475">Car on track (plant)</text><text class="s" x="414" y="493">lab mat, 0.33 m/s</text><g class="bal"><circle cx="400" cy="452" r="10.5"/><text x="400" y="455.6">P</text></g></g><path class="wire" d="M180 358 L205 358" marker-end="url(#ah-f2)"/><path class="wire" d="M395 358 L420 358" marker-end="url(#ah-f2)"/><path class="wire" d="M590 358 L615 358" marker-end="url(#ah-f2)"/><path class="wire" d="M790 358 L815 358" marker-end="url(#ah-f2)"/><path class="wire fb" d="M892 394 L892 478 L620 478" marker-end="url(#ah-f2)"/><path class="wire fb" d="M400 478 L110 478 L110 394" marker-end="url(#ah-f2)"/><text class="wl" x="126" y="470" text-anchor="start">feedback: camera sees the result</text><path class="wire em" d="M960 80 L988 80 L988 264 L505 264 L505 322" marker-end="url(#ah-f2)"/><text class="wl" x="880" y="259" text-anchor="start">policy bundle</text><path class="wire em" d="M300 322 L300 252 L860 252 L860 224" marker-end="url(#ah-f2)"/><text class="wl" x="312" y="274" text-anchor="start">drive logs</text></svg></div>
+          <figcaption><span class="lbl">Fig. 02.1</span><span>Two loops. The 20 Hz control loop closes through the car on the track, the plant. The development loop closes through drive logs, which return real frames for training and checkpoint selection. <span class="scroll-hint">Scroll the figure sideways.</span></span></figcaption>
+        </figure>
+
+        <div class="c-margin">
+          <div class="redpen"><p class="lbl">Review note · limits</p><p>Objects beside the lane caused 21 stops. The clear road caused 11 false stops, 4 of them from folds in the track mat. The test was two drives, about 6 minutes, labelled by eye.</p></div>
+        </div>
+        <div class="c-main">
+          <p class="h3" style="margin-bottom:12px">Decision record</p>
+          <ol class="decisions" data-for="f2">
+            <li tabindex="0" data-b="S1 2"><span class="dn">D1<small>S1 · 2</small></span><div><p class="what">Matched the simulator to the real camera: measured mount height and tilt, modelled the fisheye lens and normalised colour on both sides.</p><p class="why"><b>Why</b>White balance alone cannot fix a camera whose colour shifts across the frame, so shading, creases, glare and steering response are randomised in training.</p></div></li>
+            <li tabindex="0" data-b="S1"><span class="dn">D2<small>S1</small></span><div><p class="what">Mirrored half of all training episodes.</p><p class="why"><b>Why</b>The simulator drives the mat only counter-clockwise. Mirrored frames with negated steering teach the clockwise lap on a symmetric track.</p></div></li>
+            <li tabindex="0" data-b="S2"><span class="dn">D3<small>S2</small></span><div><p class="what">Rendered obstacle approach clips in Isaac Sim, from 1.6 m to contact in 1 cm steps, and pasted the matching frame into the simulated camera each tick.</p><p class="why"><b>Why</b>The Donkey simulator has no realistic objects. Clips matched to the car's 17° camera tilt put real-looking obstacles in the lane at the right scale.</p></div></li>
+            <li tabindex="0" data-b="T 3 E"><span class="dn">D4<small>T · 3 · E</small></span><div><p class="what">Switched the STOP/GO learner from PPO to DQN, trained beside the frozen steering policy, and exported both as one ONNX model.</p><p class="why"><b>Why</b>The PPO version never stopped deterministically. One model with outputs [steering, go] keeps the car's runtime simple: the car stops when go &lt; 0.</p></div></li>
+            <li tabindex="0" data-b="S3"><span class="dn">D5<small>S3</small></span><div><p class="what">Pasted real lab backgrounds into the far band of training frames, first in half of the episodes (v2), then in every episode (v3).</p><p class="why"><b>Why</b>Version 1 read "GO" from the simulator's far track edge, a cue the real lab never shows. Removing the cue removed the shortcut.</p></div></li>
+            <li tabindex="0" data-b="S4 R"><span class="dn">D6<small>S4 · R</small></span><div><p class="what">Selected checkpoints on held-out real lab frames, scored by GO and STOP rates and AUROC.</p><p class="why"><b>Why</b>Simulator evaluations hid the shortcut, and v3 even looked worse in simulation as training went on. Real frames told the truth.</p></div></li>
+            <li tabindex="0" data-b="4"><span class="dn">D7<small>4</small></span><div><p class="what">Stopped every drive on its time limit, any error, a stalled camera or a control step over 150 ms.</p><p class="why"><b>Why</b>A robot car on a lab floor needs a hard stop independent of the browser connection.</p></div></li>
+          </ol>
+        </div>
+
+        <figure class="fig c-wide">
+          <div class="fig-frame"><img src="assets/jetracer-sim-to-real.webp" width="1280" height="768" loading="lazy" style="display:block;width:100%;height:auto" alt="Grid of camera frames. Top three rows: real JetRacer camera frames with pink edge shading, the detected track lines, the lines repainted orange, and the policy input before and after repainting. Third row includes a pasted red box obstacle. Bottom row: the same views from the simulator."></div>
+          <figcaption><span class="lbl">Fig. 02.2</span><span>Real car frames (top three rows) beside the simulator (bottom row). Columns: camera, detected lines, repainted lines, policy input before and after repainting. The pink edge shading is the colour shift behind D1. Line repainting is the team's method.</span></figcaption>
+        </figure>
+
+        <figure class="fig c-wide" data-fig="f4">
+          <div class="fig-frame"><svg class="chart" viewBox="0 0 800 310" role="img" aria-labelledby="f4-t f4-d"><title id="f4-t">Figure 02.3: STOP/GO checkpoints on a held-out real lab log</title><desc id="f4-d">Percentages for three checkpoints. GO on clear straights: 0, 96, 100. GO on clear curves: 56, 99, 100. STOP on blocked frames: 78, 52, 75. AUROC: 0.52, 0.78, 0.89. Version 3 runs on the car.</desc><line class="cg" x1="110" x2="560" y1="262.0" y2="262.0"/><text class="cax" x="100" y="265.5" text-anchor="end">0</text><line class="cg" x1="110" x2="560" y1="205.0" y2="205.0"/><text class="cax" x="100" y="208.5" text-anchor="end">25</text><line class="cg" x1="110" x2="560" y1="148.0" y2="148.0"/><text class="cax" x="100" y="151.5" text-anchor="end">50</text><line class="cg" x1="110" x2="560" y1="91.0" y2="91.0"/><text class="cax" x="100" y="94.5" text-anchor="end">75</text><line class="cg" x1="110" x2="560" y1="34.0" y2="34.0"/><text class="cax" x="100" y="37.5" text-anchor="end">100</text><line class="chance" x1="110" x2="560" y1="148.0" y2="148.0"/><text class="cax ch" x="556" y="163.0" text-anchor="end">AUROC chance 0.5</text><line class="cg" x1="150" x2="150" y1="34" y2="262"/><line class="cg" x1="330" x2="330" y1="34" y2="262"/><line class="cg" x1="510" x2="510" y1="34" y2="262"/><text class="cax strong" x="150" y="282" text-anchor="middle">v1</text><text class="cax" x="150" y="296" text-anchor="middle">simulator only</text><text class="cax strong" x="330" y="282" text-anchor="middle">v2</text><text class="cax" x="330" y="296" text-anchor="middle">real far band, ½</text><text class="cax strong" x="510" y="282" text-anchor="middle">v3 · on the car</text><text class="cax" x="510" y="296" text-anchor="middle">real far band, all</text><polyline class="cl s-go-s" points="150,262.0 330,43.1 510,34.0"/><circle class="cp s-go-s" cx="150" cy="262.0" r="3.5"/><circle class="cp s-go-s" cx="330" cy="43.1" r="3.5"/><circle class="cp s-go-s" cx="510" cy="34.0" r="3.5"/><polyline class="cl s-go-c" points="150,134.3 330,36.3 510,34.0"/><circle class="cp s-go-c" cx="150" cy="134.3" r="3.5"/><circle class="cp s-go-c" cx="330" cy="36.3" r="3.5"/><circle class="cp s-go-c" cx="510" cy="34.0" r="3.5"/><polyline class="cl s-stop" points="150,84.2 330,143.4 510,91.0"/><circle class="cp s-stop" cx="150" cy="84.2" r="3.5"/><circle class="cp s-stop" cx="330" cy="143.4" r="3.5"/><circle class="cp s-stop" cx="510" cy="91.0" r="3.5"/><polyline class="cl s-auc" points="150,143.4 330,84.2 510,59.1"/><circle class="cp s-auc" cx="150" cy="143.4" r="4.5"/><circle class="cp s-auc" cx="330" cy="84.2" r="4.5"/><circle class="cp s-auc" cx="510" cy="59.1" r="4.5"/><text class="cv" x="150" y="161.4" text-anchor="middle">0.52</text><text class="cv" x="330" y="102.2" text-anchor="middle">0.78</text><text class="cv" x="510" y="77.1" text-anchor="middle">0.89</text><text class="ce" x="574" y="38.0">GO, straights and curves 100%</text><text class="ce strong" x="574" y="63.1">AUROC 0.89</text><text class="ce" x="574" y="95.0">STOP, blocked 75%</text><text class="ce" x="140" y="248.0" text-anchor="end">GO straights 0%</text></svg></div>
+          <figcaption><span class="lbl">Fig. 02.3</span><span>STOP/GO checkpoints scored on a held-out real lab log. AUROC measures how well the GO score ranks blocked frames below clear ones. Version 3 runs on the car.</span></figcaption>
+        </figure>
+
+        <div class="c-main">
+          <div class="tbl">
+            <table class="bt">
+              <caption class="lbl">Table 02.1 · Lab test, 20 Oct 2026, version 3 on the car</caption>
+              <thead><tr><th scope="col">Situation</th><th scope="col">What the car did</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Object in its path</th><td>Stopped for 14 of 14, drove into none</td></tr>
+                <tr><th scope="row">Control loop</th><td>20 Hz, no late ticks, 6.9 ms median inference</td></tr>
+                <tr><th scope="row">Offline replay</th><td>Matched the exported model on every frame</td></tr>
+                <tr><th scope="row">Steering (team policy)</th><td>3 clean simulated laps both ways at the real car's weaker steering</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="c-main lesson">
+          <p class="lbl">Lesson</p>
+          <p>A simulator score is a weak proxy for the world. I now hold out real data for model selection from day one and log every real run for replay.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 DAMAGE -->
+    <section class="sheet" id="s03" aria-labelledby="h03">
+      <div class="g12">
+        <header class="sheet-head c-full">
+          <p class="sheet-no num" aria-hidden="true">03</p>
+          <h2 id="h03">Vehicle Damage Assessment</h2>
+          <p class="kicker">Photo or video in, itemised repair quote in Australian dollars out</p>
+        </header>
+
+        <dl class="meta c-margin">
+          <div><dt class="lbl">Status</dt><dd>Working prototype, Docker Compose</dd></div>
+          <div><dt class="lbl">Role</dt><dd>Team member. I maintain the public repository.</dd></div>
+          <div><dt class="lbl">Credit</dt><dd>Team project: results are team outcomes</dd></div>
+          <div><dt class="lbl">Context</dt><dd>UTS 42028 Deep Learning and CNNs, April 2026</dd></div>
+          <div><dt class="lbl">Source</dt><dd><a href="https://github.com/BushMar12/Intelligent-Vehicle-Damage-Assessment" target="_blank" rel="noopener">GitHub repository ↗</a></dd></div>
+          <div><dt class="lbl">Stack</dt><dd class="stack">PyTorch, Ultralytics, RF-DETR, RT-DETR, Faster R-CNN, ClearML, FastAPI, PostgreSQL, SQLAlchemy, Docker, Ollama, Qwen 2.5, Flutter</dd></div>
+        </dl>
+
+        <div class="c-main prose">
+          <p class="abstract">Insurance claims and repair quotes start with a person reviewing photos. This system finds six damage types, prices the repair with rules a customer is able to check, and answers questions about the result.</p>
+          <h3>Problem</h3>
+          <p>The most accurate detector was not the right one to serve. The system needed a model small and fast enough for a web API, a pricing method a person is able to audit, and an assistant running without paid APIs.</p>
+        </div>
+
+        <figure class="fig c-full" data-fig="f3">
+          <div class="fig-frame"><svg class="schem" viewBox="0 0 1000 420" role="img" aria-labelledby="f3-t f3-d"><title id="f3-t">Figure 03.1: Vehicle damage assessment service schematic</title><desc id="f3-d">Offline: the CarDD dataset (A) feeds a six-detector benchmark (B) tracked in a ClearML registry (C), which supplies YOLO26m weights. Service: a Flutter client (1) calls FastAPI (2), which routes to the YOLO26m detector (3), cost rules in AUD (4) and a Qwen 2.5 assistant via Ollama (5). Reports and chats are stored in PostgreSQL (6).</desc><defs><marker id="ah-f3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0 L10 5 L0 10 z"/></marker><pattern id="grid-f3" width="20" height="20" patternUnits="userSpaceOnUse"><path class="gridline" d="M20 0 L0 0 0 20"/></pattern></defs><rect width="1000" height="420" fill="url(#grid-f3)"/><rect class="band dashed" x="20" y="20" width="960" height="120"/><text class="band-l" x="32" y="37">OFFLINE · DATA AND MODEL SELECTION</text><g class="blk" data-id="A"><rect x="40" y="56" width="220" height="64"/><text class="t" x="54" y="79">CarDD dataset</text><text class="s" x="54" y="97">1,971 → 5,913 train images</text><g class="bal"><circle cx="40" cy="56" r="10.5"/><text x="40" y="59.6">A</text></g></g><g class="blk" data-id="B"><rect x="300" y="56" width="300" height="64"/><text class="t" x="314" y="79">Benchmark six detectors</text><text class="s" x="314" y="97">YOLO, RT-DETR, RF-DETR, Faster R-CNN</text><g class="bal"><circle cx="300" cy="56" r="10.5"/><text x="300" y="59.6">B</text></g></g><g class="blk" data-id="C"><rect x="640" y="56" width="220" height="64"/><text class="t" x="654" y="79">ClearML registry</text><text class="s" x="654" y="97">versions, runs, promotion</text><g class="bal"><circle cx="640" cy="56" r="10.5"/><text x="640" y="59.6">C</text></g></g><path class="wire" d="M260 88 L300 88" marker-end="url(#ah-f3)"/><path class="wire" d="M600 88 L640 88" marker-end="url(#ah-f3)"/><rect class="band" x="20" y="170" width="960" height="236"/><text class="band-l" x="32" y="187">SERVICE · DOCKER COMPOSE</text><g class="blk" data-id="1"><rect x="40" y="256" width="150" height="64"/><text class="t" x="54" y="279">Flutter client</text><text class="s" x="54" y="297">web, iOS, macOS</text><g class="bal"><circle cx="40" cy="256" r="10.5"/><text x="40" y="259.6">1</text></g></g><g class="blk" data-id="2"><rect x="240" y="256" width="200" height="64"/><text class="t" x="254" y="279">FastAPI</text><text class="s" x="254" y="297">damage, cost, report, chat</text><g class="bal"><circle cx="240" cy="256" r="10.5"/><text x="240" y="259.6">2</text></g></g><g class="blk" data-id="3"><rect x="520" y="200" width="220" height="52"/><text class="t" x="534" y="223">YOLO26m detector</text><text class="s" x="534" y="241">6 damage classes</text><g class="bal"><circle cx="520" cy="200" r="10.5"/><text x="520" y="203.6">3</text></g></g><g class="blk" data-id="4"><rect x="520" y="264" width="220" height="52"/><text class="t" x="534" y="287">Cost rules (AUD)</text><text class="s" x="534" y="305">base × severity + labour + GST</text><g class="bal"><circle cx="520" cy="264" r="10.5"/><text x="520" y="267.6">4</text></g></g><g class="blk" data-id="5"><rect x="520" y="328" width="220" height="52"/><text class="t" x="534" y="351">Assistant</text><text class="s" x="534" y="369">Qwen 2.5 via Ollama</text><g class="bal"><circle cx="520" cy="328" r="10.5"/><text x="520" y="331.6">5</text></g></g><g class="blk" data-id="6"><rect x="790" y="264" width="170" height="52"/><text class="t" x="804" y="287">PostgreSQL</text><text class="s" x="804" y="305">assessments, chats</text><g class="bal"><circle cx="790" cy="264" r="10.5"/><text x="790" y="267.6">6</text></g></g><path class="wire" d="M190 288 L240 288" marker-end="url(#ah-f3)" marker-start="url(#ah-f3)"/><text class="wl" x="196" y="280" text-anchor="start">REST</text><path class="wire" d="M440 288 L480 288 M480 226 L480 354"/><path class="wire" d="M480 226 L520 226" marker-end="url(#ah-f3)"/><path class="wire" d="M480 290 L520 290" marker-end="url(#ah-f3)"/><path class="wire" d="M480 354 L520 354" marker-end="url(#ah-f3)"/><path class="wire" d="M740 290 L790 290" marker-end="url(#ah-f3)"/><path class="wire" d="M740 354 L875 354 L875 316" marker-end="url(#ah-f3)"/><path class="wire em" d="M750 120 L750 160 L630 160 L630 200" marker-end="url(#ah-f3)"/><text class="wl" x="762" y="157" text-anchor="start">YOLO26m weights</text></svg></div>
+          <figcaption><span class="lbl">Fig. 03.1</span><span>Offline selection feeds a containerised service. The dashed wire carries the selected YOLO26m weights from the ClearML registry into the API. <span class="scroll-hint">Scroll the figure sideways.</span></span></figcaption>
+        </figure>
+
+        <div class="c-margin"></div>
+        <div class="c-main">
+          <p class="h3" style="margin-bottom:12px">Decision record</p>
+          <ol class="decisions" data-for="f3">
+            <li tabindex="0" data-b="A"><span class="dn">D1<small>A</small></span><div><p class="what">Tripled the CarDD training set from 1,971 to 5,913 images with augmentation, standardised at 640×640.</p><p class="why"><b>Why</b>Six classes from under two thousand images left rare damage types thin.</p></div></li>
+            <li tabindex="0" data-b="B"><span class="dn">D2<small>B</small></span><div><p class="what">Benchmarked six detectors under one protocol: YOLO variants, RT-DETR, RF-DETR and Faster R-CNN.</p><p class="why"><b>Why</b>One-stage, transformer and two-stage designs trade accuracy, size and latency differently. The choice needed numbers, not habit.</p></div></li>
+            <li tabindex="0" data-b="B 3"><span class="dn">D3<small>B · 3</small></span><div><p class="what">Served YOLO26m instead of the top-scoring RF-DETR-m.</p><p class="why"><b>Why</b>A 42 MB model at about 23 ms per image suits a web API. The cost was 4.34 points of mAP@0.5 (Table 03.1).</p></div></li>
+            <li tabindex="0" data-b="4"><span class="dn">D4<small>4</small></span><div><p class="what">Priced repairs with explicit rules: base cost per damage type × severity (1×, 2× or 3.5×) + labour at $120 per hour + 10% GST.</p><p class="why"><b>Why</b>Every line of a quote traces back to a stated rule.</p></div></li>
+            <li tabindex="0" data-b="C"><span class="dn">D5<small>C</small></span><div><p class="what">Tracked dataset versions, experiments, model promotion and inference monitoring in ClearML.</p><p class="why"><b>Why</b>Six architectures produce many runs, and the registry records which weights the API serves.</p></div></li>
+            <li tabindex="0" data-b="5 6"><span class="dn">D6<small>5 · 6</small></span><div><p class="what">Ran Qwen 2.5 locally through Ollama, with the saved assessment as context, and stored reports and chats in PostgreSQL.</p><p class="why"><b>Why</b>The assistant answers about this car's damage, not cars in general, and costs nothing per call.</p></div></li>
+          </ol>
+        </div>
+
+        <div class="c-main">
+          <div class="tbl">
+            <table class="bt">
+              <caption class="lbl">Table 03.1 · Trade-off record, CarDD test protocol</caption>
+              <thead><tr><th scope="col">Model</th><th scope="col" class="r">mAP@0.5</th><th scope="col" class="r">F1</th><th scope="col" class="r">Size</th><th scope="col" class="r">GPU latency</th><th scope="col">Decision</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">RF-DETR-m</th><td class="r num">76.87%</td><td class="r num">n/r</td><td class="r num">n/r</td><td class="r num">n/r</td><td>Best accuracy</td></tr>
+                <tr class="sel"><th scope="row">YOLO26m</th><td class="r num">72.53%</td><td class="r num">74.12%</td><td class="r num">42 MB</td><td class="r num">~23 ms</td><td>Served</td></tr>
+                <tr><th scope="row">Difference</th><td class="r num">−4.34</td><td class="r num"></td><td class="r num"></td><td class="r num"></td><td>Points given up</td></tr>
+              </tbody>
+            </table>
+            <p class="lbl" style="margin-top:8px">n/r = not reported here. Six architectures were benchmarked in total.</p>
+          </div>
+        </div>
+        <div class="c-main lesson">
+          <p class="lbl">Lesson</p>
+          <p>The top benchmark model was the wrong production model. Writing the size and latency budget down first made the choice easy to defend.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 FURTHER WORK -->
+    <section class="sheet" id="s04" aria-labelledby="h04">
+      <div class="g12">
+        <header class="sheet-head c-full">
+          <p class="sheet-no num" aria-hidden="true">04</p>
+          <h2 id="h04">Further work</h2>
+          <p class="kicker">Research, embedded and in-progress projects</p>
+        </header>
+        <div class="c-full register-list">
+          <article class="reg-row">
+            <p class="reg-no num">04.1</p>
+            <div class="body">
+              <h3>Multimodal Stock Return Prediction</h3>
+              <p>A 1.67M-parameter two-stream model for next-day TSLA returns. A Transformer encodes 60 days of price and technical indicators, a multi-kernel 1D CNN encodes Alpha Vantage news sentiment, and cross-modal attention joins them. Splits are chronological, and scalers are fitted on training data only.</p>
+              <p>The evaluation compares the fusion model with LSTM, GRU, Transformer and XGBoost baselines, plus a 3-configuration × 5-seed ablation. The data loader caches Alpha Vantage results and resumes after rate limits. SHAP analysis and a 7-tab Streamlit dashboard. Final results are still being run.</p>
+            </div>
+            <dl>
+              <div><dt class="lbl">Field</dt><dd>Deep learning, data ingestion</dd></div>
+              <div><dt class="lbl">Context</dt><dd>UTS 49275, 2026</dd></div>
+              <div><dt class="lbl">Status</dt><dd>In progress</dd></div>
+              <div><dt class="lbl">Source</dt><dd><a href="https://github.com/BushMar12/Tesla-stock-price-prediction-using-Multimodal" target="_blank" rel="noopener">GitHub ↗</a></dd></div>
+            </dl>
+          </article>
+          <article class="reg-row">
+            <p class="reg-no num">04.2</p>
+            <div class="body">
+              <h3>Smart Parking Management</h3>
+              <p>A Raspberry Pi 5 prototype with two cameras. One reads licence plates at the entrance, the other watches the bays. YOLOv8n with INT8 quantisation ran at about 30 FPS with 90%+ detection accuracy. Free-space counts drive an LCD at the entrance and a web monitoring page.</p>
+            </div>
+            <dl>
+              <div><dt class="lbl">Field</dt><dd>Edge AI, embedded systems</dd></div>
+              <div><dt class="lbl">Context</dt><dd>Bachelor's thesis, HUST, 2024</dd></div>
+              <div><dt class="lbl">Status</dt><dd>Prototype</dd></div>
+            </dl>
+          </article>
+          <article class="reg-row">
+            <p class="reg-no num">04.3</p>
+            <div class="body">
+              <h3>OpsPilot</h3>
+              <p>A production-style AI operations platform for learning LLM engineering end to end: retrieval-augmented generation, tool calling, agent workflows, evaluation, AI security and human review. Requirements, use cases, architecture and an evaluation plan are written. Build stages follow.</p>
+            </div>
+            <dl>
+              <div><dt class="lbl">Field</dt><dd>LLM engineering, RAG, evaluation</dd></div>
+              <div><dt class="lbl">Context</dt><dd>Personal, 2026</dd></div>
+              <div><dt class="lbl">Status</dt><dd>Design stage</dd></div>
+              <div><dt class="lbl">Source</dt><dd><a href="https://github.com/BushMar12/opspilot" target="_blank" rel="noopener">GitHub ↗</a></dd></div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 ENGINEER -->
+    <section class="sheet" id="s05" aria-labelledby="h05">
+      <div class="g12">
+        <header class="sheet-head c-full">
+          <p class="sheet-no num" aria-hidden="true">05</p>
+          <h2 id="h05">The engineer</h2>
+          <p class="kicker">Control engineering first, machine learning second</p>
+        </header>
+        <div class="c-margin">
+          <p class="lbl" style="margin-bottom:12px">Working rules</p>
+          <ol class="rules-list">
+            <li><span class="n">R1</span><div><b>Measure on the target.</b><p>Desktop numbers do not predict a phone or a Nano.</p></div></li>
+            <li><span class="n">R2</span><div><b>Hold out real data.</b><p>Simulators and benchmarks hide shortcuts.</p></div></li>
+            <li><span class="n">R3</span><div><b>Write down the limits.</b><p>A reviewer should find the weak spots in my notes first.</p></div></li>
+          </ol>
+        </div>
+        <div class="c-main prose">
+          <p class="abstract">I trained as a control and automation engineer. In control work a model counts only once the whole loop works: sensor, computation, actuator, timing.</p>
+          <p>At Hanoi University of Science and Technology I took an AI sub-major and built a smart parking system on a Raspberry Pi 5 for my thesis. At UTS I specialised in computer vision, finished with a 6.67/7 GPA and made the faculty's 2026 Dean's List. Between semesters I interned at FPT Software in Hanoi. There I reimplemented the core modules of Segment Anything Model 2 in Python to see how its memory and decoder fit together.</p>
+          <p>The projects on these sheets share a pattern. Each one leaves the notebook and ends on a device or behind an API, with data pipelines, tests and release gates around the model. I am looking for a Sydney team shipping machine learning, AI or data systems into real use.</p>
+          <p class="check">edit this section into your own voice</p>
+        </div>
+        <div class="c-full">
+          <p class="h3" style="margin-bottom:6px">Evidence matrix</p>
+          <p class="lbl" style="margin-bottom:14px">■ used as a main part of the project · □ used in a supporting role</p>
+          <div class="matrix-wrap">
+            <table class="matrix">
+              <thead><tr><th scope="col" style="text-align:left">Skill</th><th scope="col">01<br>VoiceEye</th><th scope="col">02<br>JetRacer</th><th scope="col">03<br>Damage</th><th scope="col">04.1<br>Stock</th><th scope="col">04.2<br>Parking</th><th scope="col">FPT<br>Intern</th></tr></thead>
+              <tbody>
+                <tr class="grp"><th colspan="7" scope="colgroup">Machine learning</th></tr>
+                <tr><th scope="row">Object detection<span>YOLO26, YOLOv8, RF-DETR, RT-DETR, Faster R-CNN</span></th><td>■</td><td></td><td>■</td><td></td><td>■</td><td></td></tr>
+                <tr><th scope="row">Segmentation<span>SAM 2, LandingAI</span></th><td></td><td></td><td></td><td></td><td></td><td>■</td></tr>
+                <tr><th scope="row">Tracking and geometry<span>IoU tracking, monocular distance, fisheye</span></th><td>■</td><td>□</td><td></td><td></td><td></td><td></td></tr>
+                <tr><th scope="row">Reinforcement learning<span>PPO, DQN, SAC, Stable-Baselines3</span></th><td></td><td>■</td><td></td><td></td><td></td><td></td></tr>
+                <tr><th scope="row">Sequence models and fusion<span>Transformer, 1D CNN, LSTM, GRU, XGBoost</span></th><td></td><td></td><td></td><td>■</td><td></td><td></td></tr>
+                <tr><th scope="row">Evaluation design<span>held-out real data, ablations, SHAP, AUROC</span></th><td>□</td><td>■</td><td>■</td><td>■</td><td></td><td>□</td></tr>
+                <tr class="grp"><th colspan="7" scope="colgroup">Data and MLOps</th></tr>
+                <tr><th scope="row">Data pipelines<span>multi-source merge, validation, API ingestion</span></th><td>■</td><td>□</td><td>□</td><td>■</td><td></td><td></td></tr>
+                <tr><th scope="row">Experiment tracking, HPO<span>ClearML, Optuna</span></th><td>■</td><td></td><td>■</td><td></td><td></td><td></td></tr>
+                <tr><th scope="row">Release automation<span>quality gates, GitHub Actions, model promotion</span></th><td>■</td><td>□</td><td>□</td><td></td><td></td><td></td></tr>
+                <tr><th scope="row">Cloud training<span>AWS SageMaker Studio</span></th><td></td><td>■</td><td></td><td></td><td></td><td></td></tr>
+                <tr class="grp"><th colspan="7" scope="colgroup">Deployment and software</th></tr>
+                <tr><th scope="row">Edge inference<span>ONNX, ONNX Runtime Web, INT8</span></th><td>■</td><td>■</td><td></td><td></td><td>■</td><td></td></tr>
+                <tr><th scope="row">APIs and databases<span>FastAPI, PostgreSQL, Docker</span></th><td></td><td></td><td>■</td><td></td><td></td><td></td></tr>
+                <tr><th scope="row">LLM and VLM integration<span>Ollama, Qwen, Workers AI</span></th><td>■</td><td></td><td>■</td><td></td><td></td><td></td></tr>
+                <tr><th scope="row">Interfaces<span>React PWA, Flutter, Streamlit, car dashboard</span></th><td>■</td><td>□</td><td>■</td><td>■</td><td>□</td><td></td></tr>
+                <tr><th scope="row">Testing<span>Vitest, pytest</span></th><td>■</td><td>■</td><td></td><td></td><td></td><td></td></tr>
+                <tr><th scope="row">Languages<span>Python, TypeScript, SQL</span></th><td>■</td><td>■</td><td>■</td><td>■</td><td>■</td><td>■</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 RECORD -->
+    <section class="sheet" id="s06" aria-labelledby="h06">
+      <div class="g12">
+        <header class="sheet-head c-full">
+          <p class="sheet-no num" aria-hidden="true">06</p>
+          <h2 id="h06">Record</h2>
+          <p class="kicker">Experience and education, in résumé form</p>
+        </header>
+        <div class="c-full record">
+          <div>
+            <p class="lbl" style="margin-bottom:8px">Experience</p>
+            <div class="rec-entry">
+              <p class="lbl">Dec 2025 – Feb 2026 · Hanoi</p>
+              <h3>AI / Computer Vision Intern</h3>
+              <p class="org">FPT Software</p>
+              <ul>
+                <li>Studied the SAM 2 architecture: prompt encoding, mask decoder, memory encoder and temporal memory attention.</li>
+                <li>Reimplemented key SAM 2 components in Python to trace tensor flow and module interactions.</li>
+                <li>Used LandingAI to segment and prepare inputs for SAM 2 experiments, testing how preprocessing and region extraction changed results.</li>
+                <li>Ran proof-of-concept segmentation experiments across prompts and visual inputs.</li>
+              </ul>
+            </div>
+            <p class="lbl" style="margin:28px 0 8px">Languages</p>
+            <div class="rec-entry"><p>Vietnamese, native. English, professional working proficiency.</p></div>
+          </div>
+          <div>
+            <p class="lbl" style="margin-bottom:8px">Education</p>
+            <div class="rec-entry">
+              <p class="lbl">Feb 2025 – Nov 2026 · Sydney</p>
+              <h3>Master of Artificial Intelligence</h3>
+              <p class="org">University of Technology Sydney · sub-major Computer Vision</p>
+              <p class="gpa">GPA <b class="num">6.67</b> / 7 · Dean's List 2026</p>
+              <p>Image Processing and Pattern Recognition, Deep Learning and Convolutional Neural Networks, Reinforcement Learning, Advanced Data Analytics, Neural Networks and Fuzzy Logic.</p>
+            </div>
+            <div class="rec-entry">
+              <p class="lbl">Sep 2020 – Sep 2024 · Hanoi</p>
+              <h3>B.Eng Control and Automation (Advanced Program)</h3>
+              <p class="org">Hanoi University of Science and Technology · sub-major AI</p>
+              <p class="gpa">GPA <b class="num">3.65</b> / 4</p>
+              <p>Thesis: Smart Parking Management System using YOLOv8 on a Raspberry Pi 5 (sheet 04.2).</p>
+            </div>
+            <div class="rec-entry">
+              <p class="lbl">Awards</p>
+              <h3>Dean's List 2026</h3>
+              <p class="org">UTS Faculty of Engineering and Information Technology</p>
+              <p>Awarded for outstanding academic achievement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 CONTACT -->
+    <section class="sheet" id="s07" aria-labelledby="h07">
+      <div class="g12">
+        <header class="sheet-head c-full">
+          <p class="sheet-no num" aria-hidden="true">07</p>
+          <h2 id="h07">Correspondence</h2>
+          <p class="kicker">For teams in Sydney hiring ML, AI or data engineers</p>
+        </header>
+        <div class="c-margin"><p class="lbl">Email reaches me fastest.</p><p style="margin-top:12px"><a href="The_Anh_Nguyen_Resume.pdf" target="_blank" rel="noopener" style="font-family:var(--f-display);font-weight:600">Download CV (PDF) ↓</a></p></div>
+        <div class="c-wide" style="display:grid;gap:32px">
+          <p class="contact-mail" id="email">mr.bushpro2002@gmail.com</p>
+          <div class="contact-rows">
+            <div class="crow"><span class="lbl">Email</span><span class="v">Copy the address</span><button class="copy" type="button" id="copy-email">Copy</button></div>
+            <div class="crow"><span class="lbl">LinkedIn</span><a class="v" href="https://www.linkedin.com/in/bush2002/" target="_blank" rel="noopener">linkedin.com/in/bush2002</a><span class="mono" aria-hidden="true">↗</span></div>
+            <div class="crow"><span class="lbl">GitHub</span><a class="v" href="https://github.com/BushMar12" target="_blank" rel="noopener">github.com/BushMar12</a><span class="mono" aria-hidden="true">↗</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot lbl">
+      <span>Drawing set TAN-2026 · drawn and checked by The Anh Nguyen</span>
+      <span>Rev. 2026-11 · one HTML file, no frameworks</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  // Sheet register: mark the sheet in view
+  var sheets = Array.prototype.slice.call(document.querySelectorAll('.sheet'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('[data-reg] a'));
+  var cur = document.getElementById('reg-cur');
+  var regM = document.getElementById('reg-m');
+  function setCurrent(id) {
+    links.forEach(function (a) {
+      if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    if (cur) cur.textContent = 'Sheet ' + id.replace('s', '') + ' / 07';
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) setCurrent(e.target.id); });
+    }, { rootMargin: '-20% 0px -75% 0px' });
+    sheets.forEach(function (s) { io.observe(s); });
+  }
+  setCurrent('s00');
+  links.forEach(function (a) { a.addEventListener('click', function () { if (regM) regM.open = false; }); });
+
+  // Decision record <-> schematic balloons
+  document.querySelectorAll('.decisions').forEach(function (list) {
+    var fig = document.querySelector('[data-fig="' + list.getAttribute('data-for') + '"]');
+    if (!fig) return;
+    var items = Array.prototype.slice.call(list.querySelectorAll('li'));
+    var blocks = Array.prototype.slice.call(fig.querySelectorAll('.blk[data-id]'));
+    function clear() { items.forEach(function (li) { li.classList.remove('hl'); }); blocks.forEach(function (b) { b.classList.remove('hl'); }); }
+    function showItem(li) {
+      clear(); li.classList.add('hl');
+      var ids = li.getAttribute('data-b').split(' ');
+      blocks.forEach(function (b) { if (ids.indexOf(b.getAttribute('data-id')) > -1) b.classList.add('hl'); });
+    }
+    items.forEach(function (li) {
+      li.addEventListener('mouseenter', function () { showItem(li); });
+      li.addEventListener('focus', function () { showItem(li); });
+      li.addEventListener('mouseleave', clear);
+      li.addEventListener('blur', clear);
+    });
+    blocks.forEach(function (b) {
+      b.addEventListener('mouseenter', function () {
+        clear(); b.classList.add('hl');
+        var id = b.getAttribute('data-id');
+        items.forEach(function (li) { if (li.getAttribute('data-b').split(' ').indexOf(id) > -1) li.classList.add('hl'); });
+      });
+      b.addEventListener('mouseleave', clear);
+    });
+  });
+
+  // Copy email
+  var btn = document.getElementById('copy-email');
+  var email = document.getElementById('email');
+  function selectEmail() { var r = document.createRange(); r.selectNodeContents(email); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+  btn.addEventListener('click', function () {
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1800); };
+    try { navigator.clipboard.writeText(email.textContent.trim()).then(done, function () { selectEmail(); btn.textContent = 'Selected'; }); }
+    catch (e) { selectEmail(); btn.textContent = 'Selected'; }
+  });
+})();
+</script>
+
+</body>
+</html>
